@@ -30,8 +30,7 @@ if response.status_code==200:
     print("Before sign in: ", soup.find('a'))
     headers['Referer'] = 'http://oa.shijinshi.cn/sjsinfo/main'
     headers['Cookie'] = "sjsinfo.session.id="+session.cookies.get('sjsinfo.session.id')
-    print(headers)
-    response = session.post(url="http://oa.shijinshi.cn/sjsinfo/main/oa/workClockInRecord/clockInOrOut", data=payload, headers=headers)
+    response = session.post(url="http://oa.shijinshi.cn/sjsinfo/main/oa/workClockInRecord/clockInOrOut",headers=headers)
     print("After sign in:", response.content)
 else:
     print('Failed login')
