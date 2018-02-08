@@ -31,7 +31,8 @@ if response.status_code==200:
     headers['Referer'] = 'http://oa.shijinshi.cn/sjsinfo/main'
     headers['Cookie'] = "sjsinfo.session.id="+session.cookies.get('sjsinfo.session.id')
     response = session.post(url="http://oa.shijinshi.cn/sjsinfo/main/oa/workClockInRecord/clockInOrOut",headers=headers)
-    print("After sign in:", response.content)
+    if response.content.decode('utf-8') == 'in':
+        print('You have been signed in!')
 else:
-    print('Failed login')
+    print('Failed to sign in')
 

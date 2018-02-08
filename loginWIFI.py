@@ -22,8 +22,8 @@ headers = {
 # this is part is really something that should be change according to different website 
 # checkout the form data part and include every part in that block to this field
 payload = {
-    "PtUser": input('Please enter your username: '),
-    "PtPwd": input('Please enter your password: '),
+    "PtUser": runping.huang,
+    "PtPwd": 20170605,
     "PtButton": "Logon",
 }
 
