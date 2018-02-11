@@ -1,9 +1,21 @@
 import requests 
 from bs4 import BeautifulSoup
+import logging
+import os
 
 # how to deal with https?
 homeurl = 'http://oa.shijinshi.cn/sjsinfo/main/login'
 loginurl = 'http://oa.shijinshi.cn/sjsinfo/main?login'
+
+# initial logger
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename=os.getcwd()+'/oaSignin.log',
+                    filemode='w')
+logger = logging.getLogger('loginUtils')
+logger.setLevel(logging.INFO)
+
 
 hostname = 'oa.shijinshi.cn'
 
@@ -25,14 +37,12 @@ payload = {
 session = requests.session()
 response = session.post(url=homeurl, data=payload, headers=headers)
 if response.status_code==200:
-    print("Successfully logged in...")
-    soup = BeautifulSoup(response.content, 'html.parser')
-    print("Before sign in: ", soup.find('a'))
+    logger.info(msg="Successfully logged in...")
     headers['Referer'] = 'http://oa.shijinshi.cn/sjsinfo/main'
     headers['Cookie'] = "sjsinfo.session.id="+session.cookies.get('sjsinfo.session.id')
     response = session.post(url="http://oa.shijinshi.cn/sjsinfo/main/oa/workClockInRecord/clockInOrOut",headers=headers)
     if response.content.decode('utf-8') == 'in':
-        print('You have been signed in!')
+        logger.info(msg='You have been signed in!')
 else:
-    print('Failed to sign in')
+    logger.info(msg='Failed to sign in')
 
