@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 import os
+import time
 
 # how to deal with https?
 homeurl = 'http://oa.shijinshi.cn/sjsinfo/main/login'
@@ -43,6 +44,7 @@ if response.status_code==200:
     response = session.post(url="http://oa.shijinshi.cn/sjsinfo/main/oa/workClockInRecord/clockInOrOut",headers=headers)
     if response.content.decode('utf-8') == 'in':
         logger.info(msg='You have been signed in!')
+        print(time.ctime(time.time()),'oa sign in')
 else:
     logger.info(msg='Failed to sign in')
 
